@@ -11,7 +11,7 @@ st.set_page_config(page_title="NBooks", page_icon="📚", layout="wide")
 
 # --- Redirección si no hay usuario ---
 if "user" not in st.session_state:
-    st.switch_page("pages/0_Login.py")
+    st.switch_page("../pages/0_Login.py")
 
 col1, col2 = st.columns([5,1])
 with col1:

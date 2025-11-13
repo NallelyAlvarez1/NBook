@@ -1,5 +1,11 @@
 import streamlit as st
-from supabase_client import supabase
+from supabase_client import initialize_supabase_client
+
+
+@st.cache_resource 
+def get_supabase_client():
+    return initialize_supabase_client(st.secrets)
+supabase = get_supabase_client()
 
 st.set_page_config(page_title="NBooks", page_icon="📚", layout="wide")
 

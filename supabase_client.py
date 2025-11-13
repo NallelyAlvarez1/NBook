@@ -1,11 +1,12 @@
-from supabase import create_client
-import os
-from dotenv import load_dotenv
+from supabase import create_client, Client
 
-# Cargar variables del archivo .env
-load_dotenv()
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+def initialize_supabase_client(secrets: dict) -> Client:
+    try:
+        SUPABASE_URL = secrets["supabase"]["url"]
+        SUPABASE_KEY = secrets["supabase"]["key"]
+    except KeyError as e:
+        raise ValueError(f"Falta la clave {e} en la configuración de secretos de Supabase.")
 
-supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+    supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    return supabase_client

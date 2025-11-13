@@ -1,5 +1,5 @@
 # requirements.txt
 streamlit
-supabase-py
+supabase
 pandas
 plotly-express

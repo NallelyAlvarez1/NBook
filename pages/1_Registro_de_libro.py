@@ -43,25 +43,42 @@ def _selector_entidad_libro(
     nueva_entidad_creada = False
 
     # --- CASO 1: SELECTBOX (AUTOR) ---
+
     if not multiselect:
         opciones_select = ["-- Nuevo --"] + opciones
         seleccion_str = st.selectbox(label, opciones_select, key=f"{key}_selectbox")
         
         if seleccion_str == "-- Nuevo --":
-            with st.popover(btn_nuevo_label, use_container_width=True):
+            # 1. Definir una clave para el popover.
+            popover_key = f"{key}_popover"
+            
+            with st.popover(btn_nuevo_label, use_container_width=True, key=popover_key): # << AÑADIR KEY AQUÍ
                 st.subheader(modal_title)
                 nombre_nuevo = st.text_input(placeholder_nombre, key=f"{key}_new_input_selectbox")
+                
+                # 2. Usar el estado de la sesión para controlar si se debe hacer el rerun
+                # Esto es más estable que el retorno de None
+                if f"{key}_rerun_flag" not in st.session_state:
+                    st.session_state[f"{key}_rerun_flag"] = False
+
                 if st.button(f"Guardar {modal_title.split()[-1]}", key=f"{key}_save_btn_selectbox"):
                     if nombre_nuevo:
                         entidad_creada = funcion_creacion(nombre_nuevo)
                         if entidad_creada:
-                            nueva_entidad_creada = True
-                            st.rerun() 
+                            # Establecer la bandera y usar el botón para cerrar el popover si es necesario.
+                            st.session_state[f"{key}_rerun_flag"] = True
+                            st.success("Guardado. Recargando...")
+                        else:
+                            st.warning("El nombre no puede estar vacío.")
                     else:
                         st.warning("El nombre no puede estar vacío.")
-            return None if nueva_entidad_creada else seleccion_str
+            
+            # 3. Revisar la bandera fuera del popover y hacer el rerun.
+            if st.session_state[f"{key}_rerun_flag"]:
+                st.session_state[f"{key}_rerun_flag"] = False # Resetear la bandera
+                st.rerun() 
+                
         return seleccion_str
-
     # --- CASO 2: MULTISELECT (TIPOS DE NOVELA) ---
     else:
         # 1. Mostrar el multiselect (sin la opción "-- Nuevo --")

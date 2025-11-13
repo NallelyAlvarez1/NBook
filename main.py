@@ -213,7 +213,7 @@ else:
                             )
 
                     # --- Modal (Pop-up) para Ver Detalles y Cambiar Estado ---
-                    with st.popover("Ver Detalles", use_container_width=True):
+                    with st.popover("Ver Detalles", use_container_width=True, key=f"popover_detalles_{libro_id}"):
 
                         #st.header(libro['nombre'])
 

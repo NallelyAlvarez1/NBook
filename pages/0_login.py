@@ -1,5 +1,7 @@
 import streamlit as st
-from supabase_client import supabase
+from supabase_client import get_supabase_client 
+
+supabase = get_supabase_client()
 
 st.set_page_config(page_title="Inicio de Sesión", page_icon="📚", layout="centered")
 

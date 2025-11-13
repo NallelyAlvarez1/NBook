@@ -1,7 +1,9 @@
 import streamlit as st
-from supabase_client import supabase
 import datetime
 import pandas as pd
+from supabase_client import get_supabase_client 
+
+supabase = get_supabase_client()
 
 #================== FUNCIONES AUXILIARES =========================
 # Las funciones de creación y el selector de entidades se mantienen igual.

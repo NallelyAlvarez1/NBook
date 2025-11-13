@@ -1,7 +1,9 @@
 import streamlit as st
-from supabase_client import supabase
 import pandas as pd
 import plotly.express as px
+from supabase_client import get_supabase_client 
+
+supabase = get_supabase_client()
 
 st.title("📅 Calendario de lectura")
 

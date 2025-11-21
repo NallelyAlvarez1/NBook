@@ -11,8 +11,8 @@ st.title("👩‍💼 Autores registrados")
 
 autores = supabase.table("autores").select("*").order("nombre").execute().data or []
 
-#for autor in autores:
-   # st.write("📖", autor["nombre"])
+for autor in autores:
+   st.table("📖", autor["nombre"])
 
 st.divider()
 nuevo = st.text_input("Agregar nuevo autor")

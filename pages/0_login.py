@@ -2,6 +2,10 @@ import streamlit as st
 from supabase_client import get_supabase_client 
 
 supabase = get_supabase_client()
+st.set_page_config(page_title="NBooks", page_icon="📚", layout="wide")
+# --- Redirección si no hay usuario ---
+if "user" not in st.session_state:
+    st.switch_page("pages/0_login.py")
 
 st.set_page_config(page_title="Inicio de Sesión", page_icon="📚", layout="centered")
 

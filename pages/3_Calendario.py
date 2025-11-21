@@ -4,6 +4,10 @@ import plotly.express as px
 from supabase_client import get_supabase_client 
 
 supabase = get_supabase_client()
+st.set_page_config(page_title="Calendario", page_icon="📚", layout="wide")
+# --- Redirección si no hay usuario ---
+if "user" not in st.session_state:
+    st.switch_page("pages/0_login.py")
 
 st.title("📅 Calendario de lectura")
 

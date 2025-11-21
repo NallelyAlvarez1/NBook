@@ -1,5 +1,6 @@
 import streamlit as st
-from supabase_client import get_supabase_client 
+from supabase_client import get_supabase_client
+import pandas as pd 
 
 supabase = get_supabase_client()
 st.set_page_config(page_title="Autores", page_icon="📚", layout="wide")
@@ -11,8 +12,11 @@ st.title("👩‍💼 Autores registrados")
 
 autores = supabase.table("autores").select("*").order("nombre").execute().data or []
 
-for autor in autores:
-   st.table("📖", autor["nombre"])
+df = pd.DataFrame(autores)
+
+# Agregar emoji como columna
+df.insert(0, " ", "📖")
+st.dataframe(df)
 
 st.divider()
 nuevo = st.text_input("Agregar nuevo autor")
